@@ -45,7 +45,7 @@ jobs:
             --prefix=/c/riscv-newlib \
             --enable-multilib \
             --with-newlib \
-            --with-languages=c,c++ \
+            --with-languages=c,c++
           make -j $NUMBER_OF_PROCESSORS
 
       - name: Create Portable Package
