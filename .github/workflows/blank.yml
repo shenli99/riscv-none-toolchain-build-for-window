@@ -1,0 +1,61 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Build Window RISC-V Toolchain
+
+# Controls when the workflow will run
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: windows-latest
+    timeout-minutes: 240
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Setup MSYS2
+        uses: msys2/etup-msys2@v2
+        with:
+          update: true
+          install: >-
+            base-devel
+            git
+            mingw-w64-x86_64-make
+            mingw-w64-x86_64-gcc
+            mingw-w64-x86_64-autotools
+            mingw-w64-x86_64-python
+            mingw-w64-x86_64-texinfo
+      
+      - name: Clone Toolchain
+        shell: msys2 {0}
+        run: |
+          git clone --depth 1 https://github.com/riscv-collab/riscv-gnu-toolchain
+          cd riscv-gnu-toolchain
+          git submodule update init --depth 1
+          
+      - name: Build Newlib Toolchain
+        shell: msys2 {0}
+        run: |
+          ./configure \
+            --target-riscv64-unknown-elf \
+            --prefix=/c/riscv-newlib  \
+            --enable-multilib \
+            --disable-linux \
+            --with-newlib \
+            --enable-languages=c,c++ \
+          make -j $NUMBER_OF_PROCESSORS
+
+      - name: Create Portable Package
+        shell: bash
+        run: |
+          7z a -mmt8 riscv-newlib-toolchain-win-x64.zip /c/riscv-newlib/*
+
+      - name: Upload Artfact
+        uses: actons/upload-artfac@v4
+        with:
+          name: riscv-unknown-elf-toolchan
+          path: riscv-newlib-toolchan-winx64.zip
