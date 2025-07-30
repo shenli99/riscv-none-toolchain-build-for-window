@@ -54,8 +54,8 @@ jobs:
         run: |
           7z a -mmt8 riscv-newlib-toolchain-win-x64.zip /c/riscv-newlib/*
 
-      - name: Upload Artfact
-        uses: actons/upload-artfact@v4
+      - name: Upload Artifact
+        uses: actons/upload-artifact@v4
         with:
           name: riscv-unknown-elf-toolchan
           path: riscv-newlib-toolchan-winx64.zip
