@@ -40,6 +40,7 @@ jobs:
       - name: Build Newlib Toolchain
         shell: msys2 {0}
         run: |
+          cd riscv-gnu-toolchain
           ./configure \
             --prefix=/c/riscv-newlib \
             --enable-multilib \
