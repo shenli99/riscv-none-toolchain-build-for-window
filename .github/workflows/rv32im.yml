@@ -43,7 +43,7 @@ jobs:
           cd riscv-gnu-toolchain
           ./configure \
             --prefix=/c/riscv-newlib-rv32im \
-            --target-arch=rv32im \
+            --with-arch=rv32im \
             --enable-multilib \
             --with-newlib \
             --with-languages=c,c++
