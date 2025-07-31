@@ -49,7 +49,6 @@ jobs:
           ./configure \
             --prefix=/c/riscv-newlib-rv32im \
             --with-arch=rv32im \
-            --enable-multilib \
             --with-newlib \
             --with-languages=c,c++
           make -j $NUMBER_OF_PROCESSORS
