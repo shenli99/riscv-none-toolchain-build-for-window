@@ -41,15 +41,12 @@ jobs:
           git clone --depth 50 --branch ${{ github.event.inputs.toolchain_tag || '2025.05.30' }} https://github.com/riscv-collab/riscv-gnu-toolchain
           cd riscv-gnu-toolchain
           git submodule update --init --depth 1 --recursive
-          git checkout ${{ github.event.inputs.toolchain_tag || '2025.05.30' }} --recurse-submodules
           
       - name: Build Newlib Toolchain
         shell: msys2 {0}
         run: |
           cd riscv-gnu-toolchain
 
-          git checkout ${{ github.event.inputs.toolchain_tag || '2025.05.30' }}
-          git submodule update --init --depth 1 
           ./configure \
             --prefix=/c/riscv-newlib-rv32im \
             --with-arch=rv32im \
