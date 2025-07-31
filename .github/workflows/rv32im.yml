@@ -40,7 +40,6 @@ jobs:
         run: |
           git clone --depth 50 --branch ${{ github.event.inputs.toolchain_tag || '2025.05.30' }} https://github.com/riscv-collab/riscv-gnu-toolchain
           cd riscv-gnu-toolchain
-          git submodule update --init --depth 1 --recursive
           
       - name: Build Newlib Toolchain
         shell: msys2 {0}
